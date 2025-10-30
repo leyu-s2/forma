@@ -14,8 +14,7 @@ API_TOKEN = os.getenv("API_TOKEN")
 async def webhook(request: Request, background_tasks: BackgroundTasks):
  
     # 1️⃣ Получаем токен из аргумента
-    body = await request.json()
-    token = body.get("token")
+    token = request.headers.get("Authorization")
 
     if token != f"Bearer {API_TOKEN}":
         print(API_TOKEN + "api   token" + token)
