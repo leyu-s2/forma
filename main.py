@@ -19,8 +19,10 @@ async def webhook(request: Request, background_tasks: BackgroundTasks):
     body = await request.json()
     token_body = body.get("token")
 
+    token = token_query or (token_header[7:] if token_header and token_header.startswith("Bearer ") else None) or token_body
+
     # Проверяем любой источник
-    token != token_query or (token_header[7:] if token_header and token_header.startswith("Bearer ") else None) or token_body
+    if token != API_TOKEN:
         return JSONResponse(status_code=403, content={"error": "invalid token"})
 
     # 2️⃣ Получаем тело запроса
