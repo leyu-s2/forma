@@ -14,10 +14,11 @@ API_TOKEN = os.getenv("API_TOKEN")
 async def webhook(request: Request, background_tasks: BackgroundTasks):
  
     # 1️⃣ Получаем токен из аргумента
-    params = dict(request.query_params)
-    token = params.get("token")
+    body = await request.json()
+    token = body.get("token")
 
-    if token != os.getenv("WEBHOOK_TOKEN"):  # твой "секрет", который CRM будет передавать
+    if token != API_TOKEN:
+        print(API_TOKEN + "api   token" + token)
         return JSONResponse(status_code=403, content={"error": "invalid token"})
 
     # 2️⃣ Получаем тело запроса
