@@ -17,7 +17,6 @@ async def webhook(request: Request, background_tasks: BackgroundTasks):
     token = request.headers.get("Authorization")
 
     if token != f"Bearer {API_TOKEN}":
-        print(API_TOKEN + "api   token" + token)
         return JSONResponse(status_code=403, content={"error": "invalid token"})
 
     # 2️⃣ Получаем тело запроса
